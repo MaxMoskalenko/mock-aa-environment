@@ -23,5 +23,3 @@ services:
     ports: [ "4337:4337" ]
     environment:
       - ANVIL_RPC=http://anvil:8545
-      # Uncomment this if you want to use the forked version
-      #- SKIP_DEPLOYMENTS=true

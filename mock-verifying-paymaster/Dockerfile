@@ -13,6 +13,10 @@ COPY package.json ./
 # copy source code
 COPY ./src ./src
 
+# copy scripts
+COPY ./scripts .
+RUN chmod +x wait-for.sh
+
 # install dependencies
 RUN pnpm fetch
 RUN pnpm install

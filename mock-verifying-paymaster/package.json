@@ -2,7 +2,7 @@
     "name": "mock-paymaster",
     "private": true,
     "scripts": {
-        "start": "wait-port anvil:8545 && ts-node src/index.ts"
+        "start": "./wait-for.sh $ALTO_RPC && ts-node src/index.ts"
     },
     "dependencies": {
         "@fastify/cors": "^9.0.1",
