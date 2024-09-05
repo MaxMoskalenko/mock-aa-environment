@@ -94,10 +94,7 @@ export const setupVerifyingPaymasterV06 = async (
 			to: DETERMINISTIC_DEPLOYER,
 			data,
 		})
-		.then((hash) => {
-			console.log("hash", hash);
-			publicClient.waitForTransactionReceipt({ hash })
-		})
+		.then((hash) => publicClient.waitForTransactionReceipt({ hash }))
 		.then(() => console.log("deployed VerifyingPaymaster v0.6"))
 		.catch((error) => console.log("error on deploy", error));
 
@@ -113,8 +110,6 @@ export const setupVerifyingPaymasterV06 = async (
 		abi: VERIFYING_PAYMASTER_V06_ABI,
 		client: walletClient,
 	});
-
-	console.log(verifyingPaymaster);
 
 	console.log("VerifyingPaymaster V0.6 address", address);
 

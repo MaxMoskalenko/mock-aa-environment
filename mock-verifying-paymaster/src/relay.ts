@@ -65,8 +65,6 @@ const handleMethodV06 = async (
 	const verificationGasLimit = userOperation.verificationGasLimit;
 	const preVerificationGas = userOperation.preVerificationGas;
 
-	console.log(op);
-
 	if (estimateGas) {
 		let gasEstimates:
 			| EstimateUserOperationGasReturnType<ENTRYPOINT_ADDRESS_V06_TYPE>
@@ -76,7 +74,6 @@ const handleMethodV06 = async (
 				userOperation: op,
 			});
 		} catch (e: unknown) {
-			console.log('Error is here: ', e);
 			if (!(e instanceof BaseError)) throw new InternalBundlerError();
 			const err = e.walk() as RpcRequestError;
 			throw err;
