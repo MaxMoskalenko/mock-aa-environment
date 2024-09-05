@@ -12,14 +12,15 @@ import { createRpcHandler } from "./relay";
 
 const main = async () => {
 	const walletClient = await getAnvilWalletClient();
-	const verifyingPaymasterV07 = await setupVerifyingPaymasterV07(walletClient);
+	// TODO: Uncomment this and next related line to use the verifying paymaster v07
+	// const verifyingPaymasterV07 = await setupVerifyingPaymasterV07(walletClient);
 	const verifyingPaymasterV06 = await setupVerifyingPaymasterV06(walletClient);
 
-	const altoBundlerV07 = createPimlicoBundlerClient({
-		chain: await getChain(),
-		transport: http(process.env.ALTO_RPC),
-		entryPoint: ENTRYPOINT_ADDRESS_V07,
-	});
+	// const altoBundlerV07 = createPimlicoBundlerClient({
+	// 	chain: await getChain(),
+	// 	transport: http(process.env.ALTO_RPC),
+	// 	entryPoint: ENTRYPOINT_ADDRESS_V07,
+	// });
 
 	const altoBundlerV06 = createPimlicoBundlerClient({
 		chain: await getChain(),
@@ -35,9 +36,9 @@ const main = async () => {
 	});
 
 	const rpcHandler = createRpcHandler(
-		altoBundlerV07,
+		// altoBundlerV07,
 		altoBundlerV06,
-		verifyingPaymasterV07,
+		// verifyingPaymasterV07,
 		verifyingPaymasterV06,
 		walletClient,
 	);
@@ -47,7 +48,10 @@ const main = async () => {
 		return reply.code(200).send({ message: "pong" });
 	});
 
-	await app.listen({ host: "0.0.0.0", port: 3000 });
+	let port = +(process.env.PORT || 3000);
+	console.log("Listening on", port);
+
+	await app.listen({ host: "0.0.0.0", port });
 };
 
 main();

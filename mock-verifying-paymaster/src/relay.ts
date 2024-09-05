@@ -65,6 +65,8 @@ const handleMethodV06 = async (
 	const verificationGasLimit = userOperation.verificationGasLimit;
 	const preVerificationGas = userOperation.preVerificationGas;
 
+	console.log(op);
+
 	if (estimateGas) {
 		let gasEstimates:
 			| EstimateUserOperationGasReturnType<ENTRYPOINT_ADDRESS_V06_TYPE>
@@ -74,6 +76,7 @@ const handleMethodV06 = async (
 				userOperation: op,
 			});
 		} catch (e: unknown) {
+			console.log('Error is here: ', e);
 			if (!(e instanceof BaseError)) throw new InternalBundlerError();
 			const err = e.walk() as RpcRequestError;
 			throw err;
@@ -254,12 +257,12 @@ const handleMethodV07 = async (
 };
 
 const handleMethod = async (
-	altoBundlerV07: PimlicoBundlerClient<ENTRYPOINT_ADDRESS_V07_TYPE>,
+	// altoBundlerV07: PimlicoBundlerClient<ENTRYPOINT_ADDRESS_V07_TYPE>,
 	altoBundlerV06: PimlicoBundlerClient<ENTRYPOINT_ADDRESS_V06_TYPE>,
-	verifyingPaymasterV07: GetContractReturnType<
-		typeof VERIFYING_PAYMASTER_V07_ABI,
-		PublicClient<Transport, Chain>
-	>,
+	// verifyingPaymasterV07: GetContractReturnType<
+	// 	typeof VERIFYING_PAYMASTER_V07_ABI,
+	// 	PublicClient<Transport, Chain>
+	// >,
 	verifyingPaymasterV06: GetContractReturnType<
 		typeof VERIFYING_PAYMASTER_V06_ABI,
 		PublicClient<Transport, Chain>
@@ -281,15 +284,15 @@ const handleMethod = async (
 
 		const [userOperation, entryPoint] = params.data;
 
-		if (entryPoint === ENTRYPOINT_ADDRESS_V07) {
-			return await handleMethodV07(
-				userOperation as UserOperation<"v0.7">,
-				altoBundlerV07,
-				verifyingPaymasterV07,
-				walletClient,
-				true,
-			);
-		}
+		// if (entryPoint === ENTRYPOINT_ADDRESS_V07) {
+		// 	return await handleMethodV07(
+		// 		userOperation as UserOperation<"v0.7">,
+		// 		altoBundlerV07,
+		// 		verifyingPaymasterV07,
+		// 		walletClient,
+		// 		true,
+		// 	);
+		// }
 
 		if (entryPoint === ENTRYPOINT_ADDRESS_V06) {
 			return await handleMethodV06(
@@ -321,15 +324,15 @@ const handleMethod = async (
 
 		const [, entryPoint] = params.data;
 
-		if (entryPoint === ENTRYPOINT_ADDRESS_V07) {
-			return {
-				paymaster: verifyingPaymasterV07.address,
-				paymasterData:
-					"0x00000000000000000000000000000000000000000000000000000101010101010000000000000000000000000000000000000000000000000000000000000000cd91f19f0f19ce862d7bec7b7d9b95457145afc6f639c28fd0360f488937bfa41e6eedcd3a46054fd95fcd0e3ef6b0bc0a615c4d975eef55c8a3517257904d5b1c",
-				paymasterVerificationGasLimit: toHex(50_000n),
-				paymasterPostOpGasLimit: toHex(20_000n),
-			};
-		}
+		// if (entryPoint === ENTRYPOINT_ADDRESS_V07) {
+		// 	return {
+		// 		paymaster: verifyingPaymasterV07.address,
+		// 		paymasterData:
+		// 			"0x00000000000000000000000000000000000000000000000000000101010101010000000000000000000000000000000000000000000000000000000000000000cd91f19f0f19ce862d7bec7b7d9b95457145afc6f639c28fd0360f488937bfa41e6eedcd3a46054fd95fcd0e3ef6b0bc0a615c4d975eef55c8a3517257904d5b1c",
+		// 		paymasterVerificationGasLimit: toHex(50_000n),
+		// 		paymasterPostOpGasLimit: toHex(20_000n),
+		// 	};
+		// }
 
 		if (entryPoint === ENTRYPOINT_ADDRESS_V06) {
 			return {
@@ -355,15 +358,15 @@ const handleMethod = async (
 
 		const [userOperation, entryPoint] = params.data;
 
-		if (entryPoint === ENTRYPOINT_ADDRESS_V07) {
-			return await handleMethodV07(
-				userOperation as UserOperation<"v0.7">,
-				altoBundlerV07,
-				verifyingPaymasterV07,
-				walletClient,
-				false,
-			);
-		}
+		// if (entryPoint === ENTRYPOINT_ADDRESS_V07) {
+		// 	return await handleMethodV07(
+		// 		userOperation as UserOperation<"v0.7">,
+		// 		altoBundlerV07,
+		// 		verifyingPaymasterV07,
+		// 		walletClient,
+		// 		false,
+		// 	);
+		// }
 
 		if (entryPoint === ENTRYPOINT_ADDRESS_V06) {
 			return await handleMethodV06(
@@ -402,12 +405,12 @@ const handleMethod = async (
 };
 
 export const createRpcHandler = (
-	altoBundlerV07: PimlicoBundlerClient<ENTRYPOINT_ADDRESS_V07_TYPE>,
+	// altoBundlerV07: PimlicoBundlerClient<ENTRYPOINT_ADDRESS_V07_TYPE>,
 	altoBundlerV06: PimlicoBundlerClient<ENTRYPOINT_ADDRESS_V06_TYPE>,
-	verifyingPaymasterV07: GetContractReturnType<
-		typeof VERIFYING_PAYMASTER_V07_ABI,
-		PublicClient<Transport, Chain>
-	>,
+	// verifyingPaymasterV07: GetContractReturnType<
+	// 	typeof VERIFYING_PAYMASTER_V07_ABI,
+	// 	PublicClient<Transport, Chain>
+	// >,
 	verifyingPaymasterV06: GetContractReturnType<
 		typeof VERIFYING_PAYMASTER_V06_ABI,
 		PublicClient<Transport, Chain>
@@ -426,9 +429,9 @@ export const createRpcHandler = (
 
 		try {
 			const result = await handleMethod(
-				altoBundlerV07,
+				// altoBundlerV07,
 				altoBundlerV06,
-				verifyingPaymasterV07,
+				// verifyingPaymasterV07,
 				verifyingPaymasterV06,
 				walletClient,
 				parsedBody.data,

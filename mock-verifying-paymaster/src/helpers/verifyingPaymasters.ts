@@ -67,6 +67,8 @@ export const setupVerifyingPaymasterV07 = async (
 		abi: VERIFYING_PAYMASTER_V07_ABI,
 		client: walletClient,
 	});
+	
+	console.log("VerifyingPaymaster V0.7 address", address);
 
 	await verifyingPaymaster.write
 		.deposit({
@@ -92,8 +94,12 @@ export const setupVerifyingPaymasterV06 = async (
 			to: DETERMINISTIC_DEPLOYER,
 			data,
 		})
-		.then((hash) => publicClient.waitForTransactionReceipt({ hash }))
-		.then(() => console.log("deployed VerifyingPaymaster v0.6"));
+		.then((hash) => {
+			console.log("hash", hash);
+			publicClient.waitForTransactionReceipt({ hash })
+		})
+		.then(() => console.log("deployed VerifyingPaymaster v0.6"))
+		.catch((error) => console.log("error on deploy", error));
 
 	const address = getContractAddress({
 		opcode: "CREATE2",
@@ -107,6 +113,10 @@ export const setupVerifyingPaymasterV06 = async (
 		abi: VERIFYING_PAYMASTER_V06_ABI,
 		client: walletClient,
 	});
+
+	console.log(verifyingPaymaster);
+
+	console.log("VerifyingPaymaster V0.6 address", address);
 
 	await verifyingPaymaster.write
 		.deposit({

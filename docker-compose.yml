@@ -15,6 +15,7 @@ services:
     environment:
       - ALTO_RPC=http://alto:4337
       - ANVIL_RPC=http://anvil:8545
+      - PORT=3000
 
   alto:
     build:
